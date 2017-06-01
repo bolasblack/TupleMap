@@ -1,4 +1,5 @@
 import TupleMap from '../index';
+import Immutable from 'immutable';
 
 describe('TupleMap', () => {
   let cache;
@@ -13,8 +14,9 @@ describe('TupleMap', () => {
 
   describe('#_hash', () => {
     it('should create a hash for any number of args of any type', () => {
-      const tuple = [obj, arr, '123', 123, false];
-      const expectedHash = ['#0','#1','"123"','123','false'].join('/<[MI_SEP]>/');
+      const tuple = [obj, arr, '123', 123, false, Immutable.fromJS(obj)];
+      const immutableHash = '#' + Immutable.fromJS(obj).hashCode()
+      const expectedHash = ['#0','#1','"123"','123','false',immutableHash].join('/<[MI_SEP]>/');
 
       expect(cache._hash( tuple )).toEqual( expectedHash );
       expect(cache._lastTuple).toBe( tuple );

@@ -29,7 +29,12 @@ TupleMap.prototype = {
         if ( this._idMap.has( arg ) ) {
           hash.push( this._idMap.get(arg) );
         } else {
-          const id = '#' + this._id++;
+          let id
+          if (typeof arg.hashCode === 'function') {
+            id = '#' + arg.hashCode();
+          } else {
+            id = '#' + this._id++;
+          }
           this._idMap.set( arg, id );
           hash.push( id );
         }
